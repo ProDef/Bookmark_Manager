@@ -1,0 +1,14 @@
+<% @links.each do |link| %>
+<article>
+	<header>
+		<a href="<%= link.url %>"><%= link.title %></a>
+	</header>
+	<p>
+		<%= link.description %>
+	</p>
+	<footer>
+	</footer>
+</article>
+<% end %>
+
+
