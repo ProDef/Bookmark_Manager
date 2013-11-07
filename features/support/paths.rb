@@ -13,6 +13,9 @@ module NavigationHelpers
     when /the home\s?page/
       '/'
 
+    when /links/
+      '/links'
+
 
 
     # Add more mappings here.
