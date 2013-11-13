@@ -4,7 +4,7 @@ Feature: Viewing Links
 	I want to view the link I saved before
 
 	Scenario: Viewing a link
-		When I am on the homepage				
+		Given I am on the homepage				
 		And I add a link "Youtube" with url "http://www.youtube.com" and description "Youtube, upload and views videos" and tags "social media"
 		Then I should see "Youtube" within "article"
 	

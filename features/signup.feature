@@ -1,7 +1,7 @@
 Feature: sign up structure
-in order to sign up
+in order to add links
 as a user
-I need a sign in page
+I need a sign in and sign out feature.
 
 	
 	Background:
@@ -11,6 +11,9 @@ I need a sign in page
 		Given I am on the homepage
 		When I follow "Sign up"
 		Then I should see "This is our registration page"
-	
-	Scenario: Sign in
+
+	Scenario: User signs up
+		And abdi signs up with email "abdi@live.com" and password "abdi" and password confirmation "abdi"
+		Then I should see "wassup abdi@live.com"
+
 	

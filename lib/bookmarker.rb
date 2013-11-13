@@ -1,10 +1,12 @@
 require 'sinatra'
 require 'data_mapper'
 
+
 env = ENV["RACK_ENV"] || "development"
 DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
 require_relative 'link'
 require_relative 'tag'
+require_relative 'user'
 # After declaring your models, you should finalise them
 DataMapper.finalize
 
@@ -12,62 +14,77 @@ DataMapper.finalize
 DataMapper.auto_upgrade!
 
 class Bookmarker < Sinatra::Base
-	set:views, File.join(File.dirname(__FILE__), '..', 'views')
-	
-	get '/' do
-		@links = Link.all
-		erb :index
-	end
+		set:views, File.join(File.dirname(__FILE__), '..', 'views')
 
-	get '/links' do
-		# @links = Link.all
-		erb :links
-	end
+		
 
-	post '/links' do 
-		url = params["url"]
-		title = params["title"]
-		description = params["description"]
-		tags = params["tags"].split(' ').map do |tag|
-			Tag.first_or_create(:text => tag)
+		enable :sessions
+		set :session_secret, 'super secret'
+		
+		get '/' do
+			@links = Link.all
+			erb :index
 		end
-		Link.create(:url => url, :title => title, :description => description, :tags => tags)
-		redirect to('/')
+
+		get '/links' do
+			# @links = Link.all
+			erb :links
+		end
+
+		post '/links' do 
+			url = params["url"]
+			title = params["title"]
+			description = params["description"]
+			tags = params["tags"].split(' ').map do |tag|
+				Tag.first_or_create(:text => tag)
+			end
+			Link.create(:url => url, :title => title, :description => description, :tags => tags)
+			redirect to('/')
+		end
+
+		get '/tags' do 
+			erb :tag_search
+		end
+
+		get '/tags/:text' do |text|
+			puts text
+	 	 	tag = Tag.first(:text => params[:text])
+	   		@links = tag ? tag.links : []
+	 	 	erb :index
+	 	end
+
+		post '/tags' do
+	    	tag = params["tags"]
+	    	tag_search = '/tags/' + tag
+	    	redirect to('/tags')
+	   	end
+
+		get '/login' do
+			@login_page = true
+			erb :login
+		end
+
+		get '/user/new' do
+			erb :signup
+		end
+
+		post '/users' do
+  			User.create(:email => params[:email],
+  						:username => params[:email],
+    	    			:password => params[:password],
+    	    			:confirm_password => params[:confirm_password])
+  				session[:user_id] = user.id
+	 			redirect to('/')
+		end
+
+		get '/hello' do
+			"Welcome back"
+		end
+
+	helpers do
+ 		def current_user    
+    		@current_user ||=User.get(session[:user_id]) if session[:user_id]
+ 		end
 	end
-
-	get '/tags' do 
-		erb :tag_search
-	end
-
-	get '/tags/:text' do |text|
-		puts text
- 	 	tag = Tag.first(:text => params[:text])
-   		@links = tag ? tag.links : []
- 	 	erb :index
- 	end
-
-	post '/tags' do
-    	tag = params["tags"]
-    	tag_search = '/tags/' + tag
-    	redirect to(tag_search)
-   end
-
-	get '/login' do
-		@login_page = true
-		erb :login
-	end
-
-	get '/signup' do
-		erb :signup
-	end
-
-	get '/hello' do
-		"Welcome back"
-	end
-
-	get '/register' do 
-		erb :register
-	end
-
 
 end

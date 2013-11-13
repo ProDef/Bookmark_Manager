@@ -8,15 +8,21 @@
 			<nav>
 				<a href="/links"> Add Link </a>
 				<br>
+				<a href="/"> Home sweet home<a/>
 				<a href='/tags'> Filter By Tag </a>
 				<% unless @login_page %>
 					<ul>
 						<a href="/login">Sign in</a>
-						<a href="/register">Sign up</a>
+						<a href="/user/new">Sign up</a>
 					</ul>
 				<% end %>
+			</nav>
 		</header>
-		<%= yield %>
+		<% if current_user %>
+   				 Welcome, <%= current_user.email %>
+  		<% end %>
+  		<%= yield %>
 	</body>
 	<footer>Makers Academy</footer>
-<html>
+</html>
+

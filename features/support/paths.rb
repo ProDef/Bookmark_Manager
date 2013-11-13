@@ -16,6 +16,9 @@ module NavigationHelpers
     when /links/
       '/links'
 
+    when /signup/
+      '/signup'
+
 
 
     # Add more mappings here.
