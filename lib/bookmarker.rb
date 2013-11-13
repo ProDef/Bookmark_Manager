@@ -75,7 +75,7 @@ class Bookmarker < Sinatra::Base
   			@user = User.new(:email => params[:email],
   						:username => params[:email],
     	    			:password => params[:password],
-    	    			:confirm_password => params[:confirm_password])
+    	    			:password_confirmation => params[:password_confirmation])
   			if @user.save	
   				session[:user_id] = @user.id
 	 			redirect to('/')
@@ -84,8 +84,20 @@ class Bookmarker < Sinatra::Base
 	 		end
 		end
 
-		get '/hello' do
-			"Welcome back"
+		get '/sessions/new' do
+ 		 	erb :"sessions/new"
+		end
+
+		post '/sessions' do
+			 email, password = params[:email], params[:password]
+			 user = User.authenticate(email, password)
+			 if user
+			   session[:user_id] = user.id
+			   redirect to('/')
+			 else
+			   flash[:errors] = ["The email or password are incorrect"]
+			   erb :"sessions/new"
+			 end
 		end
 
 	helpers do
