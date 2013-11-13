@@ -1,7 +1,7 @@
 Feature: sign up structure
 in order to add links
 as a user
-I need a sign in and sign out feature.
+I need a sign in  and sign out feature.
 
 	
 	Background:
@@ -13,7 +13,7 @@ I need a sign in and sign out feature.
 		Then I should see "This is our registration page"
 
 	Scenario: User signs up
-		And abdi signs up with email "abdi@live.com" and password "abdi" and password confirmation "abdi"
+		And abdi signs up with email "abdi@live.com" and username "abdi" password "abdi" and password confirmation "abdi"
 		Then I should see "wassup abdi@live.com"
 
 	
