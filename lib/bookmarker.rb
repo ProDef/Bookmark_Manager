@@ -18,6 +18,7 @@ DataMapper.auto_upgrade!
 class Bookmarker < Sinatra::Base
 		set:views, File.join(File.dirname(__FILE__), '..', 'views')
 		use Rack::Flash
+		# use Rack::MethodOverride
 		
 
 		enable :sessions
@@ -73,14 +74,14 @@ class Bookmarker < Sinatra::Base
 
 		post '/users' do
   			@user = User.new(:email => params[:email],
-  						:username => params[:email],
     	    			:password => params[:password],
     	    			:password_confirmation => params[:password_confirmation])
   			if @user.save	
   				session[:user_id] = @user.id
 	 			redirect to('/')
 	 		else
-				flash.now[:errors] = @user.errors.full_messages	 			erb :"users/new"
+				flash.now[:errors] = @user.errors.full_messages	 			
+				erb :signup
 	 		end
 		end
 

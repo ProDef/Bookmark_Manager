@@ -1,30 +1,16 @@
 Feature: User signs in do
+in order to sign in
+as a user
+I need a sign in
 
-  before(:each) do
-    User.create(:email => "test@test.com", 
-                :password => 'test', 
-                :password_confirmation => 'test')
-  end
+  Background
+    Given I am on the homepage
 
-  scenario "with correct credentials" do
-    visit '/'
-    expect(page).not_to have_content("Welcome, test@test.com")
-    sign_in('test@test.com', 'test')
-    expect(page).to have_content("Welcome, test@test.com")
-  end
+    Scenario: Sign in with correct details
+      Given I am on the homepage
+      And abdi signs in with the email "abdi@live.com" and the password "abdi"
 
-  scenario "with incorrect credentials" do
-    visit '/'
-    expect(page).not_to have_content("Welcome, test@test.com")
-    sign_in('test@test.com', 'wrong')
-    expect(page).not_to have_content("Welcome, test@test.com")
-  end
-
-  def sign_in(email, password)
-    visit '/sessions/new'
-    fill_in 'email', :with => email
-    fill_in 'password', :with => password
-    click_button 'Sign in'
-  end
-
-end
+     Scenario: Sign in with wrong details
+      Given I am on the homepage
+      And james signs in with the email "lion@live.com" and the password "happy"
+      Then I should see "The email or password are incorrect"

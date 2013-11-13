@@ -1,16 +1,15 @@
-Feature: User signs out do
+Feature: User signs out
+in order to sign out of my account
+as a user
+I need to sign out
 
-  before(:each) do
-    User.create(:email => "test@test.com", 
-                :password => 'test', 
-                :password_confirmation => 'test')
-  end
 
-  scenario 'while being signed in' do
-    sign_in('test@test.com', 'test')
-    click_button "Sign out"
-    expect(page).to have_content("Good bye!")
-    expect(page).not_to have_content("Welcome, test@test.com")
-  end
+  Background:
+    Given I am on the homepage
 
-end
+  Scenario: signing out
+    Given I am on the homepage
+    And ham signs in with the email "ham@mail.com" and the password "bun"
+    Then I should see "Sign out"
+
+

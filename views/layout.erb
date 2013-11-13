@@ -5,6 +5,7 @@
 	</head>
 	<body>
 		<header>
+		<%= erb :"sessions/new" %>
 			<% if flash[:errors] && !flash[:errors].empty? %>
   				Sorry, there were the following problems with the form. 
   					<ul id="errors">
@@ -32,13 +33,6 @@
 				<% end %>
 			</nav>
 		</header>
-		<% if current_user %>
-    		Welcome, <%= current_user.email %>
-   		    <form method="post" action="/sessions">
-      		<input type="hidden" name="_method" value="delete">
-     		 <input type="submit" value="Sign out">
-   	 		</form>
- 		 <% end %>
   		<%= yield %>
 	</body>
 	<footer>Makers Academy</footer>

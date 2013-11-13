@@ -1,7 +1,23 @@
-When(/^I sign up with email "(.*?)" and username "(.*?)" and password "(.*?)" and password confirmation "(.*?)"$/) do |arg1, arg2, arg3, arg4, arg5, arg6|
-	fill_in('email', :with => email)
-	fill_in('username', :with => link_title)
-	fill_in('password', :with => link_description)
-	fill_in('confirm password', :with => confirm_password)
-	click_button('Sign up')
-end
+   Given(/^abdi signs up with the email "(.*?)" and password "(.*?)" and password confirmation "(.*?)"$/) do |email, password, password_confirmation|
+   click_link('Sign up')
+   fill_in :email, :with => email
+   fill_in :password, :with => password
+   fill_in :password_confirmation, :with => password_confirmation
+   click_button('sign up')
+ end
+ 
+   Given(/^nadia signs up with the email "(.*?)" and password "(.*?)" and password confirmation "(.*?)"$/) do |email, password, password_confirmation|
+   click_link('Sign up')
+   fill_in :email, :with => email
+   fill_in :password, :with => password
+   fill_in :password_confirmation, :with => password_confirmation
+   click_button('sign up')
+ end
+ 
+   When(/^sarah signs up with the email "(.*?)" and password "(.*?)" and password confirmation "(.*?)"$/) do |email, password, password_confirmation|
+   click_link('Sign up')
+   fill_in :email, :with => email
+   fill_in :password, :with => password
+   fill_in :password_confirmation, :with => password_confirmation
+   click_button('sign up')
+ end
