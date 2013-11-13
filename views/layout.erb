@@ -13,6 +13,11 @@
    					<% end %>
   				</ul>
 			<% end %>
+			 <% if flash[:notice] %>
+    				<div id="notice">
+      			<%= flash[:notice] %>
+    				</div>
+  				<% end %>
 			<h1>Bookmark Manager</h1>
 			<nav>
 				<a href="/links"> Add Link </a>
@@ -28,8 +33,12 @@
 			</nav>
 		</header>
 		<% if current_user %>
-   				 Welcome, <%= current_user.email %>
-  		<% end %>
+    		Welcome, <%= current_user.email %>
+   		    <form method="post" action="/sessions">
+      		<input type="hidden" name="_method" value="delete">
+     		 <input type="submit" value="Sign out">
+   	 		</form>
+ 		 <% end %>
   		<%= yield %>
 	</body>
 	<footer>Makers Academy</footer>
