@@ -1,9 +1,13 @@
 <html>
 	<head>
 		<title>Hello World</title>
+
 	</head>
 	<body>
 		<header>
+			<% if flash[:notice] %>
+  		<div id="notice"><%= flash[:notice] %></div>
+			<% end %>
 			<h1>Bookmark Manager</h1>
 			<nav>
 				<a href="/links"> Add Link </a>
